@@ -61,67 +61,113 @@ const Navbar = () => {
       }}
     >
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          {/* LOGO */}
-          <HomeContainer>
-            <NavLogo
-              to="top"
-              spy={true}
-              smooth={true}
-              offset={-70}
-              duration={500}
-              onClick={homeHandler}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                textDecoration: 'none',
-                color: 'inherit',
-              }}
-            >
-              <img src={logo} alt="Logo" />
+        {/* Use flexDirection column on Toolbar for mobile layout */}
+        <Toolbar disableGutters sx={{ width: '100%', flexDirection: 'column', px: 2, py: 1 }}>
+
+          {/* 1️⃣ Mobile Top Row: Logo + Name (centered) & Search Icon (right) */}
+          <Box
+            sx={{
+              width: '100%',
+              display: { xs: 'flex', md: 'none' },
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center', mx: 'auto' }}>
+              <img
+                src={logo}
+                alt="Logo"
+                style={{ width: '3.2rem', height: '3.2rem', borderRadius: '8px' }}
+              />
               <Typography
-                variant="h5"
+                variant="h6"
                 sx={{
-                  fontWeight: 700,
                   color: 'white',
                   fontFamily: 'Poppins, sans-serif',
-                  display: { xs: 'none', sm: 'block' },
+                  fontWeight: 600,
+                  ml: 1,
                 }}
               >
-                Neelam Gemstones
+                Neelam Jewellers
               </Typography>
-            </NavLogo>
-          </HomeContainer>
-
-          {/* Mobile - Search Icon */}
-          <Box sx={{ display: { xs: 'flex', md: 'none' }, ml: 'auto' }}>
-            <IconButton size="large" onClick={() => navigate('/Search')} color="inherit">
+            </Box>
+            <IconButton onClick={() => navigate('/Search')} sx={{ color: '#fff' }}>
               <SearchIcon />
             </IconButton>
           </Box>
 
-          {/* Desktop - Search & Menu */}
-          <Box sx={{ flexGrow: 4, display: { xs: 'none', md: 'flex' }, ml: 3 }}>
-            <Search />
-            <ProductsMenu dropName="Catagories" />
-          </Box>
-
-          {/* Contact Info */}
-           <Box
+          {/* 2️⃣ Mobile Second Row: Category Button aligned right */}
+          {/* <Box
             sx={{
-              display: { xs: 'none', lg: 'flex' },
-              fontSize: '0.95rem',
-              color: '#fff',
-              fontWeight: 400,
-              ml: 4,
+              display: { xs: 'flex', md: 'none' },
+              width: '100%',
+              justifyContent: 'flex-end',
+              mt: 1,
             }}
           >
-            35+ Years of Trust | 100% Genuine Gemstones | Contact: <strong>&nbsp;9936182620</strong>
+            <ProductsMenu dropName="Gemstone Categories" />
+          </Box> */}
+
+          {/* 3️⃣ Desktop layout (original, visible md+) */}
+          <Box
+            sx={{
+              width: '100%',
+              display: { xs: 'none', md: 'flex' },
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <HomeContainer>
+              <NavLogo
+                to="top"
+                spy={true}
+                smooth={true}
+                offset={-70}
+                duration={500}
+                onClick={homeHandler}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                }}
+              >
+                <img src={logo} alt="Logo" />
+                <Typography
+                  variant="h5"
+                  sx={{
+                    fontWeight: 700,
+                    color: 'white',
+                    fontFamily: 'Poppins, sans-serif',
+                    display: { xs: 'none', sm: 'block' },
+                  }}
+                >
+                  Neelam Jewellers
+                </Typography>
+              </NavLogo>
+            </HomeContainer>
+
+            <Box sx={{ flexGrow: 4, display: 'flex', ml: 3 }}>
+              <Search />
+              <ProductsMenu dropName="Gemstones" />
+            </Box>
+
+            <Box
+              sx={{
+                display: { xs: 'none', lg: 'flex' },
+                fontSize: '0.95rem',
+                color: '#fff',
+                fontWeight: 400,
+                ml: 4,
+              }}
+            >
+              35+ Years of Trust | 100% Genuine Gemstones | Contact: <strong>&nbsp;9936182620</strong>
+            </Box>
           </Box>
 
-          {/* Customer Menu */}
+          {/* Customer Menu (visible on all sizes if Customer) */}
           {currentRole === 'Customer' && (
-            <Box sx={{ flexGrow: 0, display: 'flex' }}>
+            <Box sx={{ flexGrow: 0, display: 'flex', mt: { xs: 1, md: 0 } }}>
               <Tooltip title="Cart">
                 <IconButton onClick={() => setIsCartOpen(true)} sx={{ color: 'inherit' }}>
                   <Badge badgeContent={totalQuantity} color="error">
@@ -199,9 +245,7 @@ const Navbar = () => {
 
 export default Navbar;
 
-//
 // Styled Components
-//
 
 const HomeContainer = styled.div`
   display: flex;
@@ -212,12 +256,12 @@ const HomeContainer = styled.div`
     width: 4.2rem;
     height: 4.2rem;
     border-radius: 10px;
-    filter: drop-shadow(0 0 8px rgba(255, 246, 81, 1));
+    filter: drop-shadow(0 0 8px rgba(82, 134, 255, 1));
     transition: transform 0.3s ease;
 
     &:hover {
       transform: scale(1.08);
-      filter: drop-shadow(0 0 12px rgba(1, 111, 255, 1));
+      filter: drop-shadow(0 0 12px rgba(255, 255, 255, 1));
     }
   }
 `;
