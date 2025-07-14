@@ -15,11 +15,18 @@ import adImage from '../assets/Shop.png';
 import logo from '../assets/logo.png'; // Add your logo image here
 const blueSapphire = 'linear-gradient(90deg, rgba(181, 181, 255, 0.6) 0%, rgba(136, 255, 177, 0.8) 100%)';
 
-
 const Home = () => {
   const dispatch = useDispatch();
   const { productData, responseProducts, error } = useSelector(state => state.user);
   const [showNetworkError, setShowNetworkError] = useState(false);
+
+  // Alert for mobile users
+  useEffect(() => {
+    const isMobile = window.innerWidth <= 768; // Mobile breakpoint
+    if (isMobile) {
+      alert("For better experience, please open this website in Desktop mode.");
+    }
+  }, []);
 
   useEffect(() => {
     dispatch(getProducts());
@@ -104,7 +111,6 @@ const Home = () => {
 
 export default Home;
 
-
 //
 // Styled Components
 //
@@ -161,7 +167,6 @@ const CenteredContent = styled(Container)`
   padding: 3rem 0;
   text-align: center;
 `;
-
 
 const Footer = styled(Box)`
   background:  ${blueSapphire};
