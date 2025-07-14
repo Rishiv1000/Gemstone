@@ -32,9 +32,6 @@ const Navbar = () => {
     }
   }, [currentRole, currentUser, dispatch]);
 
-
-
-  
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const open = Boolean(anchorElUser);
   const [isCartOpen, setIsCartOpen] = React.useState(false);
@@ -42,15 +39,18 @@ const Navbar = () => {
   const homeHandler = () => navigate('/');
 
   return (
-    <AppBar position="sticky" sx={{
-      background: blueSapphire,
-      backdropFilter: 'blur(6px)',
-      WebkitBackdropFilter: 'blur(6px)',
-    }}>
+    <AppBar
+      position="sticky"
+      sx={{
+        background: blueSapphire,
+        backdropFilter: 'blur(6px)',
+        WebkitBackdropFilter: 'blur(6px)',
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ width: '100%', flexDirection: 'column', px: 2, py: 1 }}>
 
-          {/* 1️⃣ Mobile Top Row: Logo + Name + Search */}
+          {/* ✅ Top row on mobile: Centered logo and name, right-side buttons */}
           <Box
             sx={{
               width: '100%',
@@ -59,7 +59,10 @@ const Navbar = () => {
               justifyContent: 'space-between',
             }}
           >
-            <Box onClick={homeHandler} sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+            <Box
+              onClick={homeHandler}
+              sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', mx: 'auto' }}
+            >
               <img
                 src={logo}
                 alt="Logo"
@@ -86,32 +89,44 @@ const Navbar = () => {
               </Typography>
             </Box>
 
-            <Box>
+            {/* Search & Category buttons on right side (mobile) */}
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <IconButton onClick={() => navigate('/Search')} sx={{ color: '#fff' }}>
                 <SearchIcon />
               </IconButton>
+              <ProductsMenu dropName="Gemstones" />
             </Box>
           </Box>
 
-          {/* 2️⃣ Mobile Second Row: Product Dropdown */}
+          {/* ✅ Below logo: mobile-only legacy info */}
           <Box
             sx={{
-              display: { xs: 'flex', md: 'none' },
-              width: '100%',
-              justifyContent: 'center',
               mt: 1,
+              display: { xs: 'flex', md: 'none' },
+              justifyContent: 'center',
             }}
           >
-            <ProductsMenu dropName="Gemstones" />
+            <Typography
+              variant="body2"
+              sx={{
+                color: '#fff',
+                fontSize: '0.85rem',
+                fontWeight: 400,
+                textAlign: 'center',
+              }}
+            >
+              35+ Years of Legacy in Genuine Gemstones
+            </Typography>
           </Box>
 
-          {/* 3️⃣ Desktop layout */}
+          {/* ✅ Desktop layout */}
           <Box
             sx={{
               width: '100%',
               display: { xs: 'none', md: 'flex' },
               alignItems: 'center',
               justifyContent: 'space-between',
+              mt: 1,
             }}
           >
             <HomeContainer onClick={homeHandler}>
@@ -147,7 +162,7 @@ const Navbar = () => {
             </Box>
           </Box>
 
-          {/* 4️⃣ Customer Account & Cart */}
+          {/* ✅ Account & Cart */}
           {currentRole === 'Customer' && (
             <Box sx={{ flexGrow: 0, display: 'flex', mt: { xs: 1, md: 0 } }}>
               <Tooltip title="Cart">
@@ -205,7 +220,7 @@ const Navbar = () => {
         </Toolbar>
       </Container>
 
-      {/* Cart Drawer */}
+      {/* ✅ Cart Drawer */}
       <Drawer
         anchor="right"
         open={isCartOpen}
@@ -225,7 +240,7 @@ const Navbar = () => {
 
 export default Navbar;
 
-// Styled Components
+// ✅ Styled Components
 
 const HomeContainer = styled.div`
   display: flex;
@@ -256,7 +271,7 @@ const styles = {
     minWidth: '180px',
     '& .MuiAvatar-root': {
       width: 22,
-      height: 10,
+      height: 22,
       ml: -0.5,
       mr: 1,
     },
