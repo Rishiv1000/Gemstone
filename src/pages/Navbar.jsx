@@ -32,6 +32,9 @@ const Navbar = () => {
     }
   }, [currentRole, currentUser, dispatch]);
 
+
+
+  
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const open = Boolean(anchorElUser);
   const [isCartOpen, setIsCartOpen] = React.useState(false);
