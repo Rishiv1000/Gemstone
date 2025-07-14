@@ -12,14 +12,15 @@ import ProductsMenu from './customer/components/ProductsMenu';
 // Assets
 import bannerImage from '../assets/nn.jpeg';
 import adImage from '../assets/Shop.png';
-import logo from '../assets/logo.png'; // Add your logo image here
-const blueSapphire = 'linear-gradient(90deg, rgba(255, 255, 255, 0.6) 0%, rgba(136, 255, 177, 0.8) 100%)';
+import logo from '../assets/logo.png';
 
+const blueSapphire ='linear-gradient(90deg, rgba(53, 52, 80, 0.98) 0%, rgba(1, 15, 122, 0.8) 100%)';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { productData, responseProducts, error } = useSelector(state => state.user);
+  const { productData, responseProducts, error } = useSelector((state) => state.user);
   const [showNetworkError, setShowNetworkError] = useState(false);
+  const [showLoadingLine, setShowLoadingLine] = useState(true); // control the loading line
 
   useEffect(() => {
     dispatch(getProducts());
@@ -31,6 +32,12 @@ const Home = () => {
       return () => clearTimeout(timeoutId);
     }
   }, [error]);
+
+  // Hide animated loading line after 10 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => setShowLoadingLine(false), 10000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div id="top">
@@ -47,6 +54,9 @@ const Home = () => {
           style={{ width: '100%', height: '250px', borderRadius: 8, objectFit: 'cover' }}
         />
       </BannerBox>
+
+      {/* Animated Loading Line */}
+      {showLoadingLine && <LoadingLine />}
 
       {/* Error or Loading */}
       {showNetworkError ? (
@@ -86,13 +96,13 @@ const Home = () => {
         <FooterContainer>
           <Logo src={logo} alt="Neelam Jewellers Logo" />
           <FooterText>
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" color="white" gutterBottom>
               Neelam Jewellers
             </Typography>
-            <Typography variant="body2" color="textSecondary">
+            <Typography variant="body2" color="white">
               Address: C Block, Yashoda Nagar, Kanpur Nagar , Uttar Pradesh
             </Typography>
-            <Typography variant="body2" color="textSecondary">
+            <Typography variant="body2" color="white">
               Serving with excellence for over 35 years in the gemstone industry.
             </Typography>
           </FooterText>
@@ -103,7 +113,6 @@ const Home = () => {
 };
 
 export default Home;
-
 
 //
 // Styled Components
@@ -120,6 +129,23 @@ const MobileMenuContainer = styled(Container)(({ theme }) => ({
 const BannerBox = styled(Box)`
   padding: 20px 10px;
   background: #f9f9f9;
+`;
+
+// 🔽 Animated loading line style
+const LoadingLine = styled(Box)`
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+  animation: loadLine 10s linear forwards;
+
+  @keyframes loadLine {
+    0% {
+      width: 0%;
+    }
+    100% {
+      width: 100%;
+    }
+  }
 `;
 
 const MainContent = styled(Box)(({ theme }) => ({
@@ -162,9 +188,8 @@ const CenteredContent = styled(Container)`
   text-align: center;
 `;
 
-
 const Footer = styled(Box)`
-  background:  ${blueSapphire};
+  background: ${blueSapphire};
   padding: 30px 0;
   margin-top: 40px;
   border-top: 1px solid #ddd;
@@ -187,4 +212,4 @@ const Logo = styled('img')`
 const FooterText = styled(Box)`
   text-align: left;
   max-width: 400px;
-`;
+`; 
