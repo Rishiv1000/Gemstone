@@ -13,7 +13,7 @@ import ProductsMenu from './customer/components/ProductsMenu';
 import bannerImage from '../assets/nn.jpeg';
 import adImage from '../assets/Shop.png';
 import logo from '../assets/logo.png'; // Add your logo image here
-const blueSapphire = 'linear-gradient(90deg, rgba(181, 181, 255, 0.6) 0%, rgba(136, 255, 177, 0.8) 100%)';
+const blueSapphire = 'linear-gradient(90deg, rgba(255, 255, 255, 0.6) 0%, rgba(136, 255, 177, 0.8) 100%)';
 
 
 const Home = () => {
