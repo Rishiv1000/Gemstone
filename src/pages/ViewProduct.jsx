@@ -8,28 +8,33 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { BasicButton } from '../utils/buttonStyles';
 import { getProductDetails, updateStuff } from '../redux/userHandle';
 import { generateRandomColor, timeAgo } from '../utils/helperFunctions';
-import styled from 'styled-components';
 
-// ✅ Add your banner image here
-import bannerImage from '../assets/nn.jpeg';
+import styled from 'styled-components';
 
 const ViewProduct = () => {
   const dispatch = useDispatch();
   const { id: productID } = useParams();
-  const { currentUser, productDetails, loading, responseDetails } = useSelector(state => state.user);
 
-  const [anchorElMenu, setAnchorElMenu] = useState(null);
-  const reviewerId = currentUser?._id;
+  const { currentUser, productDetails, loading, responseDetails } = useSelector(state => state.user);
 
   useEffect(() => {
     dispatch(getProductDetails(productID));
   }, [dispatch, productID]);
 
-  const handleOpenMenu = (e) => setAnchorElMenu(e.currentTarget);
-  const handleCloseMenu = () => setAnchorElMenu(null);
+  const [anchorElMenu, setAnchorElMenu] = useState(null);
+  const reviewerId = currentUser?._id;
+
+  const handleOpenMenu = (event) => {
+    setAnchorElMenu(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorElMenu(null);
+  };
 
   const deleteHandler = (reviewId) => {
-    dispatch(updateStuff({ reviewId }, productID, 'deleteProductReview'));
+    const fields = { reviewId };
+    dispatch(updateStuff(fields, productID, "deleteProductReview"));
     handleCloseMenu();
   };
 
@@ -38,37 +43,31 @@ const ViewProduct = () => {
 
   return (
     <>
-      {/* 🚩 Banner */}
-      <BannerContainer>
-        <BannerImg src={bannerImage} alt="Product Banner" />
-      </BannerContainer>
-
-      {/* Product Layout */}
       <ProductContainer>
         <ImageWrapper>
-          <ProductImage src={productDetails.productImage} alt={productDetails.productName} />
+          <ProductImage
+            src={productDetails?.productImage}
+            alt={productDetails?.productName}
+          />
         </ImageWrapper>
 
         <ProductInfo>
-          <ProductName>{productDetails.productName}</ProductName>
-
+          <ProductName>{productDetails?.productName}</ProductName>
           <PriceContainer>
-            <PriceCost>₹{productDetails.price.cost}</PriceCost>
-            <PriceMrp>₹{productDetails.price.mrp}</PriceMrp>
-            <PriceDiscount>{productDetails.price.discountPercent}% off</PriceDiscount>
+            <PriceCost>₹{productDetails?.price?.cost}</PriceCost>
+            <PriceMrp>₹{productDetails?.price?.mrp}</PriceMrp>
+            <PriceDiscount>{productDetails?.price?.discountPercent}% off</PriceDiscount>
           </PriceContainer>
-
-          <Description>{productDetails.description}</Description>
-
-          <ProductDetailsBlock>
-            <p><strong>Category:</strong> {productDetails.category}</p>
-            <p><strong>Subcategory:</strong> {productDetails.subcategory}</p>
-          </ProductDetailsBlock>
+          <Description>{productDetails?.description}</Description>
+          <ProductDetails>
+            <p><strong>Category:</strong> {productDetails?.category}</p>
+            <p><strong>Subcategory:</strong> {productDetails?.subcategory}</p>
+          </ProductDetails>
 
           <ButtonContainer>
             <a
               href={`https://wa.me/919140865532?text=${encodeURIComponent(
-                `Hi, I'm interested in the product: ${productDetails.productName} (ID: ${productID}). Can you tell me more?`
+                `Hi, I'm interested in the product: ${productDetails?.productName} (ID: ${productID}). Can you tell me more?`
               )}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -80,15 +79,14 @@ const ViewProduct = () => {
         </ProductInfo>
       </ProductContainer>
 
-      {/* Reviews Section */}
       <ReviewWritingContainer>
         <Typography variant="h4">Reviews</Typography>
       </ReviewWritingContainer>
 
-      {productDetails.reviews?.length > 0 ? (
+      {productDetails?.reviews?.length > 0 ? (
         <ReviewContainer>
-          {productDetails.reviews.map((review, idx) => (
-            <ReviewCard key={idx}>
+          {productDetails.reviews.map((review, index) => (
+            <ReviewCard key={index}>
               <ReviewCardDivision>
                 <Avatar
                   sx={{
@@ -103,7 +101,7 @@ const ViewProduct = () => {
 
                 <ReviewDetails>
                   <Typography variant="h6">{review.reviewer.name}</Typography>
-                  <Typography variant="body2" sx={{ mb: 1 }}>
+                  <Typography variant="body2" sx={{ marginBottom: '0.5rem' }}>
                     {timeAgo(review.date)}
                   </Typography>
                   <Typography variant="subtitle1">Rating: {review.rating}</Typography>
@@ -122,8 +120,12 @@ const ViewProduct = () => {
                       anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
                       transformOrigin={{ vertical: 'top', horizontal: 'left' }}
                     >
-                      <MenuItem onClick={handleCloseMenu}><Typography>Edit</Typography></MenuItem>
-                      <MenuItem onClick={() => deleteHandler(review._id)}><Typography>Delete</Typography></MenuItem>
+                      <MenuItem onClick={handleCloseMenu}>
+                        <Typography>Edit</Typography>
+                      </MenuItem>
+                      <MenuItem onClick={() => deleteHandler(review._id)}>
+                        <Typography>Delete</Typography>
+                      </MenuItem>
                     </Menu>
                   </>
                 )}
@@ -136,40 +138,25 @@ const ViewProduct = () => {
           <Typography variant="h6">No Reviews Found. Be the first to add one!</Typography>
         </ReviewWritingContainer>
       )}
-      
     </>
   );
 };
 
 export default ViewProduct;
 
-/* ================== Styled Components ================== */
-
-const BannerContainer = styled.div`
-  width: 100%;
-  max-height: 300px;
-  overflow: hidden;
-`;
-
-const BannerImg = styled.img`
-  width: 100%;
-  object-fit: cover;
-  display: block;
-`;
+//
+// Styled Components
+//
 
 const ProductContainer = styled.div`
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   gap: 2rem;
   margin: 2rem auto;
   padding: 1rem;
   justify-content: center;
   max-width: 1200px;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: center;
-  }
 `;
 
 const ImageWrapper = styled.div`
@@ -184,12 +171,7 @@ const ProductImage = styled.img`
   width: 100%;
   max-width: 300px;
   border-radius: 8px;
-  object-fit: contain;
-
-  @media (max-width: 768px) {
-    max-width: 100%;
-    height: auto;
-  }
+  object-fit: cover;
 `;
 
 const ProductInfo = styled.div`
@@ -197,32 +179,20 @@ const ProductInfo = styled.div`
   min-width: 280px;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   gap: 1rem;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    padding: 0 1rem;
-  }
 `;
 
 const ProductName = styled.h1`
   font-size: 26px;
   font-weight: 600;
-  text-align: center;
-
-  @media (min-width: 769px) {
-    text-align: left;
-  }
+  margin: 0;
 `;
 
 const PriceContainer = styled.div`
   display: flex;
   gap: 1rem;
   align-items: baseline;
-
-  @media (max-width: 768px) {
-    justify-content: center;
-  }
 `;
 
 const PriceCost = styled.h3`
@@ -243,28 +213,26 @@ const PriceDiscount = styled.p`
 const Description = styled.p`
   color: #444;
   line-height: 1.5;
-  text-align: justify;
 `;
 
-const ProductDetailsBlock = styled.div`
+const ProductDetails = styled.div`
   font-size: 0.95rem;
   color: #333;
-
-  @media (max-width: 768px) {
-    text-align: center;
-  }
 `;
 
 const ButtonContainer = styled.div`
+  margin-top: 1rem;
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 1rem;
+  align-items: center;
 `;
 
 const ReviewWritingContainer = styled.div`
-  margin: 4rem auto 1rem;
-  text-align: center;
+  margin: 4rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
 `;
 
 const ReviewContainer = styled.div`
@@ -275,7 +243,7 @@ const ReviewContainer = styled.div`
 
 const ReviewCard = styled(Card)`
   && {
-    background: white;
+    background-color: white;
     margin-bottom: 1.5rem;
     padding: 1rem;
   }
@@ -285,12 +253,6 @@ const ReviewCardDivision = styled.div`
   display: flex;
   align-items: flex-start;
   gap: 1rem;
-
-  @media (max-width: 600px) {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
 `;
 
 const ReviewDetails = styled.div`
