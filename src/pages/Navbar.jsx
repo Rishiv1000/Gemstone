@@ -95,7 +95,7 @@ const Navbar = () => {
                     fontSize: '1rem',
                   }}
                 >
-                  Neelam Gemstones
+                  Neelam Jewellers
                 </span>
               </NavLogo>
             </Typography>
