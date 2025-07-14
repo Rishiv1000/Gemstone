@@ -96,10 +96,8 @@ const ViewProduct = () => {
                                 }
                     <ButtonContainer>
                         <a
-                            href={`https://wa.me/919140865532?text=${encodeURIComponent(
-                                `Hi, I'm interested in the product: ${productDetails?.productName} 
-                                 LINK: https://neelamjewellers.vercel.app/product/view/${productID}
-                                 I want to buy it. What is process of buying it?`
+                            href={`https://wa.me/919305961787?text=${encodeURIComponent(
+                                `Hi, I'm interested in the product: ${productDetails?.productName} productid: ${productID} . I want to buy it. What is process of buying it?`
                               
                             )}`}
                             target="_blank"
