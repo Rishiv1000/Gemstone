@@ -83,7 +83,7 @@ const ViewProduct = () => {
                     <ButtonContainer>
                         <a
                             href={`https://wa.me/919140865532?text=${encodeURIComponent(
-                                `Hi, I'm interested in the product: ${productDetails?.productName} (ID: ${productID}). Can you tell me more?`
+                                `Hi, I'm interested in the product: ${productDetails?.productName} (LINK: https://neelamjewellers.vercel.app/product/view/${productID}). Can you tell me more?`
                             )}`}
                             target="_blank"
                             rel="noopener noreferrer"
