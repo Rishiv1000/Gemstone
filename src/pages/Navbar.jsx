@@ -65,37 +65,42 @@ const Navbar = () => {
         <Toolbar disableGutters sx={{ width: '100%', flexDirection: 'column', px: 2, py: 1 }}>
 
           {/* 1️⃣ Mobile Top Row: Logo + Name (centered) & Search Icon (right) */}
-          <Box
-            sx={{
-              width: '100%',
-              display: { xs: 'flex', md: 'none' },
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-          >
-            <Box sx={{ display: 'flex', alignItems: 'center', mx: 'auto' }}>
-              <img
-                src={logo}
-                alt="Logo"
-                style={{ width: '3.2rem', height: '3.2rem', borderRadius: '8px' }}
-              />
-              <Typography
-                variant="h6"
-                sx={{
-                  color: 'white',
-                  fontFamily: 'Poppins, sans-serif',
-                  fontWeight: 600,
-                  ml: 1,
-                }}
-              >
-                Neelam Jewellers
-              </Typography>
-            </Box>
-            <IconButton onClick={() => navigate('/Search')} sx={{ color: '#fff' }}>
-              <SearchIcon />
-            </IconButton>
-          </Box>
+         <Box
+  onClick={homeHandler}
+  sx={{
+    display: 'flex',
+    alignItems: 'center',
+    mx: 'auto',
+    cursor: 'pointer',
+  }}
+>
+  <img
+    src={logo}
+    alt="Logo"
+    style={{
+      width: '3.2rem',
+      height: '3.2rem',
+      borderRadius: '8px',
+      filter: 'drop-shadow(0 0 8px rgba(82, 134, 255, 1))',
+      transition: 'transform 0.3s ease',
+    }}
+    onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.08)')}
+    onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+  />
+  <Typography
+    variant="h6"
+    sx={{
+      color: 'white',
+      fontFamily: 'Poppins, sans-serif',
+      fontWeight: 600,
+      ml: 1,
+    }}
+  >
+    Neelam Jewellers
+  </Typography>
+</Box>
 
+                
           {/* 2️⃣ Mobile Second Row: Category Button aligned right */}
           {/* <Box
             sx={{
@@ -275,8 +280,8 @@ const styles = {
     borderRadius: '10px',
     minWidth: '180px',
     '& .MuiAvatar-root': {
-      width: 32,
-      height: 32,
+      width: 22,
+      height: 10,
       ml: -0.5,
       mr: 1,
     },
