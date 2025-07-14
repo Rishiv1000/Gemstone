@@ -72,10 +72,18 @@ const Navbar = () => {
       alignItems: 'flex-start',
       cursor: 'pointer',
       flex: 1,
+      minWidth: 0, // important to prevent overflow
     }}
   >
     {/* Logo + Brand Name */}
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        flexWrap: 'nowrap',
+        overflow: 'hidden',
+      }}
+    >
       <img
         src={logo}
         alt="Logo"
@@ -85,17 +93,22 @@ const Navbar = () => {
           borderRadius: '8px',
           filter: 'drop-shadow(0 0 8px rgba(82, 134, 255, 1))',
           transition: 'transform 0.3s ease',
+          flexShrink: 0,
         }}
         onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.08)')}
         onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
       />
       <Typography
         variant="h6"
+        noWrap
         sx={{
           color: 'white',
           fontFamily: 'Poppins, sans-serif',
           fontWeight: 600,
           ml: 1,
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
         }}
       >
         Neelam Jewellers
@@ -111,8 +124,8 @@ const Navbar = () => {
         fontWeight: 400,
         mt: 0.5,
         ml: 0.5,
-        maxWidth: '180px',
         lineHeight: 1.2,
+        maxWidth: '100%',
       }}
     >
       35+ Years of Legacy in Genuine Gemstones
