@@ -111,7 +111,7 @@ const Navbar = () => {
                     {currentRole === null && (
                         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                             <IconButton size="large" onClick={e => setAnchorElNav(e.currentTarget)} color="inherit">
-                                <Login />
+                                {/* <Login /> */}
                             </IconButton>
                             <Menu
                                 anchorEl={anchorElNav}
