@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Box, Container} from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Card, IconButton, Menu, MenuItem, Typography } from '@mui/material';
@@ -8,138 +9,149 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { BasicButton } from '../utils/buttonStyles';
 import { getProductDetails, updateStuff } from '../redux/userHandle';
 import { generateRandomColor, timeAgo } from '../utils/helperFunctions';
-
 import styled from 'styled-components';
 
+// ✅ Add your banner image here
+import bannerImage from '../assets/nn.jpeg';
+
+
+
 const ViewProduct = () => {
-  const dispatch = useDispatch();
-  const { id: productID } = useParams();
+    const dispatch = useDispatch();
+    const { id: productID } = useParams();
 
-  const { currentUser, productDetails, loading, responseDetails } = useSelector(state => state.user);
+    const { currentUser, productDetails, loading, responseDetails } = useSelector(state => state.user);
 
-  useEffect(() => {
-    dispatch(getProductDetails(productID));
-  }, [dispatch, productID]);
+    useEffect(() => {
+        dispatch(getProductDetails(productID));
+    }, [dispatch, productID]);
 
-  const [anchorElMenu, setAnchorElMenu] = useState(null);
-  const reviewerId = currentUser?._id;
+    const [anchorElMenu, setAnchorElMenu] = useState(null);
+    const reviewerId = currentUser?._id;
 
-  const handleOpenMenu = (event) => {
-    setAnchorElMenu(event.currentTarget);
-  };
+    const handleOpenMenu = (event) => {
+        setAnchorElMenu(event.currentTarget);
+    };
 
-  const handleCloseMenu = () => {
-    setAnchorElMenu(null);
-  };
+    const handleCloseMenu = () => {
+        setAnchorElMenu(null);
+    };
 
-  const deleteHandler = (reviewId) => {
-    const fields = { reviewId };
-    dispatch(updateStuff(fields, productID, "deleteProductReview"));
-    handleCloseMenu();
-  };
+    const deleteHandler = (reviewId) => {
+        const fields = { reviewId };
+        dispatch(updateStuff(fields, productID, "deleteProductReview"));
+        handleCloseMenu();
+    };
 
-  if (loading) return <div>Loading...</div>;
-  if (responseDetails) return <div>Product not found</div>;
+    if (loading) return <div>Loading...</div>;
+    if (responseDetails) return <div>Product not found</div>;
 
-  return (
-    <>
-      <ProductContainer>
-        <ImageWrapper>
-          <ProductImage
-            src={productDetails?.productImage}
-            alt={productDetails?.productName}
-          />
-        </ImageWrapper>
+    return (
+        <>
+            <BannerBox>
+                <img
+                    src={bannerImage}
+                    alt="Banner"
+                    style={{ width: '100%', height: '250px', borderRadius: 8, objectFit: 'cover' }}
+                />
+            </BannerBox>
+            <ProductContainer>
+                <ImageWrapper>
+                    <ProductImage
+                        src={productDetails?.productImage}
+                        alt={productDetails?.productName}
+                    />
+                </ImageWrapper>
 
-        <ProductInfo>
-          <ProductName>{productDetails?.productName}</ProductName>
-          <PriceContainer>
-            <PriceCost>₹{productDetails?.price?.cost}</PriceCost>
-            <PriceMrp>₹{productDetails?.price?.mrp}</PriceMrp>
-            <PriceDiscount>{productDetails?.price?.discountPercent}% off</PriceDiscount>
-          </PriceContainer>
-          <Description>{productDetails?.description}</Description>
-          <ProductDetails>
-            <p><strong>Category:</strong> {productDetails?.category}</p>
-            <p><strong>Subcategory:</strong> {productDetails?.subcategory}</p>
-          </ProductDetails>
+                <ProductInfo>
+                    <ProductName>{productDetails?.productName}</ProductName>
+                    <PriceContainer>
+                        <PriceCost>₹{productDetails?.price?.cost}</PriceCost>
+                        <PriceMrp>₹{productDetails?.price?.mrp}</PriceMrp>
+                        <PriceDiscount>{productDetails?.price?.discountPercent}% off</PriceDiscount>
+                    </PriceContainer>
+                    <Description>{productDetails?.description}</Description>
+                    <ProductDetails>
+                        <p><strong>Category:</strong> {productDetails?.category}</p>
+                        <p><strong>Subcategory:</strong> {productDetails?.subcategory}</p>
+                    </ProductDetails>
 
-          <ButtonContainer>
-            <a
-              href={`https://wa.me/919140865532?text=${encodeURIComponent(
-                `Hi, I'm interested in the product: ${productDetails?.productName} (ID: ${productID}). Can you tell me more?`
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ textDecoration: 'none' }}
-            >
-              <BasicButton startIcon={<WhatsAppIcon />}>Chat on WhatsApp</BasicButton>
-            </a>
-          </ButtonContainer>
-        </ProductInfo>
-      </ProductContainer>
+                    <ButtonContainer>
+                        <a
+                            href={`https://wa.me/919140865532?text=${encodeURIComponent(
+                                `Hi, I'm interested in the product: ${productDetails?.productName} (ID: ${productID}). Can you tell me more?`
+                            )}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ textDecoration: 'none' }}
+                        >
+                            <BasicButton startIcon={<WhatsAppIcon />}>Chat on WhatsApp</BasicButton>
+                        </a>
+                    </ButtonContainer>
+                </ProductInfo>
+            </ProductContainer>
 
-      <ReviewWritingContainer>
-        <Typography variant="h4">Reviews</Typography>
-      </ReviewWritingContainer>
+            <ReviewWritingContainer>
+                <Typography variant="h4">Reviews</Typography>
+            </ReviewWritingContainer>
 
-      {productDetails?.reviews?.length > 0 ? (
-        <ReviewContainer>
-          {productDetails.reviews.map((review, index) => (
-            <ReviewCard key={index}>
-              <ReviewCardDivision>
-                <Avatar
-                  sx={{
-                    width: 60,
-                    height: 60,
-                    marginRight: '1rem',
-                    backgroundColor: generateRandomColor(review._id),
-                  }}
-                >
-                  {review.reviewer.name.charAt(0)}
-                </Avatar>
+            {productDetails?.reviews?.length > 0 ? (
+                <ReviewContainer>
+                    {productDetails.reviews.map((review, index) => (
+                        <ReviewCard key={index}>
+                            <ReviewCardDivision>
+                                <Avatar
+                                    sx={{
+                                        width: 60,
+                                        height: 60,
+                                        marginRight: '1rem',
+                                        backgroundColor: generateRandomColor(review._id),
+                                    }}
+                                >
+                                    {review.reviewer.name.charAt(0)}
+                                </Avatar>
 
-                <ReviewDetails>
-                  <Typography variant="h6">{review.reviewer.name}</Typography>
-                  <Typography variant="body2" sx={{ marginBottom: '0.5rem' }}>
-                    {timeAgo(review.date)}
-                  </Typography>
-                  <Typography variant="subtitle1">Rating: {review.rating}</Typography>
-                  <Typography variant="body1">{review.comment}</Typography>
-                </ReviewDetails>
+                                <ReviewDetails>
+                                    <Typography variant="h6">{review.reviewer.name}</Typography>
+                                    <Typography variant="body2" sx={{ marginBottom: '0.5rem' }}>
+                                        {timeAgo(review.date)}
+                                    </Typography>
+                                    <Typography variant="subtitle1">Rating: {review.rating}</Typography>
+                                    <Typography variant="body1">{review.comment}</Typography>
+                                </ReviewDetails>
 
-                {review.reviewer._id === reviewerId && (
-                  <>
-                    <IconButton onClick={handleOpenMenu} sx={{ p: 0, ml: 1 }}>
-                      <MoreVert />
-                    </IconButton>
-                    <Menu
-                      anchorEl={anchorElMenu}
-                      open={Boolean(anchorElMenu)}
-                      onClose={handleCloseMenu}
-                      anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-                      transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-                    >
-                      <MenuItem onClick={handleCloseMenu}>
-                        <Typography>Edit</Typography>
-                      </MenuItem>
-                      <MenuItem onClick={() => deleteHandler(review._id)}>
-                        <Typography>Delete</Typography>
-                      </MenuItem>
-                    </Menu>
-                  </>
-                )}
-              </ReviewCardDivision>
-            </ReviewCard>
-          ))}
-        </ReviewContainer>
-      ) : (
-        <ReviewWritingContainer>
-          <Typography variant="h6">No Reviews Found. Be the first to add one!</Typography>
-        </ReviewWritingContainer>
-      )}
-    </>
-  );
+                                {review.reviewer._id === reviewerId && (
+                                    <>
+                                        <IconButton onClick={handleOpenMenu} sx={{ p: 0, ml: 1 }}>
+                                            <MoreVert />
+                                        </IconButton>
+                                        <Menu
+                                            anchorEl={anchorElMenu}
+                                            open={Boolean(anchorElMenu)}
+                                            onClose={handleCloseMenu}
+                                            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                                            transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+                                        >
+                                            <MenuItem onClick={handleCloseMenu}>
+                                                <Typography>Edit</Typography>
+                                            </MenuItem>
+                                            <MenuItem onClick={() => deleteHandler(review._id)}>
+                                                <Typography>Delete</Typography>
+                                            </MenuItem>
+                                        </Menu>
+                                    </>
+                                )}
+                            </ReviewCardDivision>
+                        </ReviewCard>
+                    ))}
+                </ReviewContainer>
+            ) : (
+                <ReviewWritingContainer>
+                    <Typography variant="h6">No Reviews Found. Be the first to add one!</Typography>
+                </ReviewWritingContainer>
+            )}
+        </>
+    );
 };
 
 export default ViewProduct;
@@ -147,7 +159,6 @@ export default ViewProduct;
 //
 // Styled Components
 //
-
 const ProductContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -157,6 +168,11 @@ const ProductContainer = styled.div`
   padding: 1rem;
   justify-content: center;
   max-width: 1200px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const ImageWrapper = styled.div`
@@ -171,7 +187,18 @@ const ProductImage = styled.img`
   width: 100%;
   max-width: 300px;
   border-radius: 8px;
-  object-fit: cover;
+  object-fit: contain;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    height: auto;
+  }
+`;
+
+
+const BannerBox = styled(Box)`
+  padding: 20px 10px;
+  background: #f9f9f9;
 `;
 
 const ProductInfo = styled.div`
@@ -181,18 +208,32 @@ const ProductInfo = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   gap: 1rem;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 0 1rem;
+  }
 `;
 
 const ProductName = styled.h1`
   font-size: 26px;
   font-weight: 600;
   margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 22px;
+    text-align: center;
+  }
 `;
 
 const PriceContainer = styled.div`
   display: flex;
   gap: 1rem;
   align-items: baseline;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
 `;
 
 const PriceCost = styled.h3`
@@ -218,12 +259,18 @@ const Description = styled.p`
 const ProductDetails = styled.div`
   font-size: 0.95rem;
   color: #333;
+
+  @media (max-width: 768px) {
+    text-align: center;
+  }
 `;
 
 const ButtonContainer = styled.div`
   margin-top: 1rem;
   display: flex;
-  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
 `;
 
 const ReviewWritingContainer = styled.div`
@@ -233,6 +280,7 @@ const ReviewWritingContainer = styled.div`
   gap: 1.5rem;
   align-items: center;
   justify-content: center;
+  padding: 0 1rem;
 `;
 
 const ReviewContainer = styled.div`
@@ -253,8 +301,14 @@ const ReviewCardDivision = styled.div`
   display: flex;
   align-items: flex-start;
   gap: 1rem;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
 `;
 
 const ReviewDetails = styled.div`
   flex: 1;
-`;
+`; 
