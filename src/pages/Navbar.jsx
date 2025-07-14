@@ -63,26 +63,19 @@ const Navbar = () => {
     px: 1,
   }}
 >
-  {/* Left: Search & Dropdown (stacked) */}
-  <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 0.5 }}>
-    <IconButton onClick={() => navigate('/Search')} sx={{ color: '#fff' }}>
-      <SearchIcon />
-    </IconButton>
-    <ProductsMenu dropName="Gemstones" />
-  </Box>
-
-  {/* Right: Logo + Name + Legacy */}
+  {/* Left side: Logo + Name + Legacy text */}
   <Box
     onClick={homeHandler}
     sx={{
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'flex-end',
-      textAlign: 'right',
+      alignItems: 'flex-start',
       cursor: 'pointer',
+      flex: 1,
     }}
   >
-    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+    {/* Logo + Brand Name */}
+    <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <img
         src={logo}
         alt="Logo"
@@ -108,6 +101,8 @@ const Navbar = () => {
         Neelam Jewellers
       </Typography>
     </Box>
+
+    {/* Legacy Text */}
     <Typography
       variant="body2"
       sx={{
@@ -115,14 +110,32 @@ const Navbar = () => {
         fontSize: '0.75rem',
         fontWeight: 400,
         mt: 0.5,
+        ml: 0.5,
+        maxWidth: '180px',
         lineHeight: 1.2,
       }}
     >
       35+ Years of Legacy in Genuine Gemstones
     </Typography>
   </Box>
-</Box>
 
+  {/* Right side: Search Icon + Dropdown */}
+  <Box
+    sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'flex-end',
+      justifyContent: 'flex-start',
+      gap: 0.5,
+      mt: 0.5,
+    }}
+  >
+    <IconButton onClick={() => navigate('/Search')} sx={{ color: '#fff' }}>
+      <SearchIcon />
+    </IconButton>
+    <ProductsMenu dropName="Gemstones" />
+  </Box>
+</Box>
 
 
           {/* ✅ Desktop layout */}
