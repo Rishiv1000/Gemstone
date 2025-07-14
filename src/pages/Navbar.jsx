@@ -51,73 +51,91 @@ const Navbar = () => {
         <Toolbar disableGutters sx={{ width: '100%', flexDirection: 'column', px: 2, py: 1 }}>
 
           {/* ✅ Top row on mobile: Centered logo and name, right-side buttons */}
-          <Box
-            sx={{
-              width: '100%',
-              display: { xs: 'flex', md: 'none' },
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-          >
-            <Box
-              onClick={homeHandler}
-              sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', mx: 'auto' }}
-            >
-              <img
-                src={logo}
-                alt="Logo"
-                style={{
-                  width: '3rem',
-                  height: '3rem',
-                  borderRadius: '8px',
-                  filter: 'drop-shadow(0 0 8px rgba(82, 134, 255, 1))',
-                  transition: 'transform 0.3s ease',
-                }}
-                onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.08)')}
-                onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-              />
-              <Typography
-                variant="h6"
-                sx={{
-                  color: 'white',
-                  fontFamily: 'Poppins, sans-serif',
-                  fontWeight: 600,
-                  ml: 1,
-                }}
-              >
-                Neelam Jewellers
-              </Typography>
-            </Box>
+          {/* ✅ Mobile: Logo + Title + Legacy (left), Search + Gemstones (right) */}
+{/* ✅ Mobile: Logo + Name + Legacy on left, Search + Gemstones on right */}
+<Box
+  sx={{
+    width: '100%',
+    display: { xs: 'flex', md: 'none' },
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    px: 1,
+  }}
+>
+  {/* Left side: Logo, Name, Legacy */}
+  <Box
+    onClick={homeHandler}
+    sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+      cursor: 'pointer',
+      flex: 1,
+    }}
+  >
+    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <img
+        src={logo}
+        alt="Logo"
+        style={{
+          width: '3rem',
+          height: '3rem',
+          borderRadius: '8px',
+          filter: 'drop-shadow(0 0 8px rgba(82, 134, 255, 1))',
+          transition: 'transform 0.3s ease',
+        }}
+        onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.08)')}
+        onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+      />
+      <Typography
+        variant="h6"
+        sx={{
+          color: 'white',
+          fontFamily: 'Poppins, sans-serif',
+          fontWeight: 600,
+          ml: 1,
+        }}
+      >
+        Neelam Jewellers
+      </Typography>
+    </Box>
 
-            {/* Search & Category buttons on right side (mobile) */}
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <IconButton onClick={() => navigate('/Search')} sx={{ color: '#fff' }}>
-                <SearchIcon />
-              </IconButton>
-              <ProductsMenu dropName="Gemstones" />
-            </Box>
-          </Box>
+    {/* Legacy text */}
+    {/* <Typography
+      variant="body2"
+      sx={{
+        color: '#e0e0e0',
+        fontSize: '0.75rem',
+        fontWeight: 400,
+        mt: 0.5,
+        ml: 0.5,
+        maxWidth: '180px',
+        lineHeight: 1.2,
+      }}
+    >
+      35+ Years of Legacy in Genuine Gemstones
+    </Typography> */}
+  </Box>
 
-          {/* ✅ Below logo: mobile-only legacy info */}
-          <Box
-            sx={{
-              mt: 1,
-              display: { xs: 'flex', md: 'none' },
-              justifyContent: 'center',
-            }}
-          >
-            <Typography
-              variant="body2"
-              sx={{
-                color: '#fff',
-                fontSize: '0.85rem',
-                fontWeight: 400,
-                textAlign: 'center',
-              }}
-            >
-              35+ Years of Legacy in Genuine Gemstones
-            </Typography>
-          </Box>
+  {/* Right side: Search & Category */}
+  <Box
+    sx={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1,
+      mt: 0.5,
+    }}
+  >
+    <br></br>
+    <IconButton onClick={() => navigate('/Search')} sx={{ color: '#fff' }}>
+      <SearchIcon />
+    </IconButton>
+    <ProductsMenu dropName="Gemstones" />
+  </Box>
+</Box>
+
+
 
           {/* ✅ Desktop layout */}
           <Box
