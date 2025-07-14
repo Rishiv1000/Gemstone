@@ -11,9 +11,13 @@ import { getProductDetails, updateStuff } from '../redux/userHandle';
 import { generateRandomColor, timeAgo } from '../utils/helperFunctions';
 import styled from 'styled-components';
 
+// import bannerImage from '../assets/nn.png';
+import adImage from '../assets/Shop.png';
+import logo from '../assets/logo.png';
+
 // ✅ Add your banner image here
 import bannerImage from '../assets/nn.jpeg';
-
+const blueSapphire ='linear-gradient(90deg, rgba(53, 52, 80, 0.98) 0%, rgba(1, 15, 122, 0.8) 100%)';
 
 
 const ViewProduct = () => {
@@ -150,6 +154,22 @@ const ViewProduct = () => {
                     <Typography variant="h6">No Reviews Found. Be the first to add one!</Typography>
                 </ReviewWritingContainer>
             )}
+                <Footer>
+                    <FooterContainer>
+                      <Logo src={logo} alt="Neelam Jewellers Logo" />
+                      <FooterText>
+                        <Typography variant="h6" color="white" gutterBottom>
+                          Neelam Jewellers
+                        </Typography>
+                        <Typography variant="body2" color="white">
+                          Address: C Block, Yashoda Nagar, Kanpur Nagar , Uttar Pradesh
+                        </Typography>
+                        <Typography variant="body2" color="white">
+                          Serving with excellence for over 35 years in the gemstone industry.
+                        </Typography>
+                      </FooterText>
+                    </FooterContainer>
+                  </Footer>
         </>
     );
 };
@@ -311,4 +331,39 @@ const ReviewCardDivision = styled.div`
 
 const ReviewDetails = styled.div`
   flex: 1;
+`; 
+const Footer = styled(Box)`
+  background: ${blueSapphire};
+  padding: 30px 0;
+  margin-top: 40px;
+  border-top: 1px solid #ddd;
+`;
+
+const CenteredContent = styled(Container)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 3rem 0;
+  text-align: center;
+`;
+
+const FooterContainer = styled(Container)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+`;
+
+const Logo = styled('img')`
+  width: 80px;
+  height: auto;
+  border-radius: 8px;
+`;
+
+const FooterText = styled(Box)`
+  text-align: left;
+  max-width: 400px;
 `; 
