@@ -1,7 +1,7 @@
 # Getting Started with Create React App
+https://neelamjewellers.vercel.app/
 
 
-Host - https://gemstone-seven.vercel.app/
 Backend - https://github.com/abhishekv1000/Neelam-Gemstones/tree/main
 
 https://github.com/Yogndrr/MERN-Ecommerce-Site
