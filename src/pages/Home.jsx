@@ -10,7 +10,7 @@ import Slide from './Slide';
 import ProductsMenu from './customer/components/ProductsMenu';
 
 // Assets
-import bannerImage from '../assets/nn.jpeg';
+import bannerImage from '../assets/nn.png';
 import adImage from '../assets/Shop.png';
 import logo from '../assets/logo.png';
 
@@ -42,7 +42,7 @@ const Home = () => {
   return (
     <div id="top">
       {/* Mobile Menu */}
-{/*       <MobileMenuContainer>
+      {/* <MobileMenuContainer>
         <ProductsMenu dropName="Products" />
       </MobileMenuContainer> */}
 
