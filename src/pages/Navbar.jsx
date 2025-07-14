@@ -1,24 +1,12 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
+import {
+  AppBar, Box, Toolbar, IconButton, Typography, Menu, Container,
+  Tooltip, MenuItem, Avatar, Badge, Divider, Drawer, ListItemIcon
+} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import Container from '@mui/material/Container';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Logout, Shop2 } from '@mui/icons-material';
 import { Link, useNavigate } from 'react-router-dom';
-import {
-  Avatar,
-  Badge,
-  Divider,
-  Drawer,
-  ListItemIcon,
-} from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { styled } from 'styled-components';
 
@@ -26,7 +14,6 @@ import Cart from './customer/components/Cart';
 import Search from './customer/components/Search';
 import ProductsMenu from './customer/components/ProductsMenu';
 import { updateCustomer } from '../redux/userHandle';
-import { NavLogo } from '../utils/styles';
 import logo from '../assets/logo.png';
 
 const blueSapphire = 'linear-gradient(90deg, rgba(53, 52, 80, 0.98) 0%, rgba(1, 15, 122, 0.8) 100%)';
@@ -52,68 +39,70 @@ const Navbar = () => {
   const homeHandler = () => navigate('/');
 
   return (
-    <AppBar
-      position="sticky"
-      sx={{
-        background: blueSapphire,
-        backdropFilter: 'blur(6px)',
-        WebkitBackdropFilter: 'blur(6px)',
-      }}
-    >
+    <AppBar position="sticky" sx={{
+      background: blueSapphire,
+      backdropFilter: 'blur(6px)',
+      WebkitBackdropFilter: 'blur(6px)',
+    }}>
       <Container maxWidth="xl">
-        {/* Use flexDirection column on Toolbar for mobile layout */}
         <Toolbar disableGutters sx={{ width: '100%', flexDirection: 'column', px: 2, py: 1 }}>
 
-          {/* 1️⃣ Mobile Top Row: Logo + Name (centered) & Search Icon (right) */}
-         <Box
-  onClick={homeHandler}
-  sx={{
-    display: 'flex',
-    alignItems: 'center',
-    mx: 'auto',
-    cursor: 'pointer',
-  }}
->
-  <img
-    src={logo}
-    alt="Logo"
-    style={{
-      width: '3.2rem',
-      height: '3.2rem',
-      borderRadius: '8px',
-      filter: 'drop-shadow(0 0 8px rgba(82, 134, 255, 1))',
-      transition: 'transform 0.3s ease',
-    }}
-    onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.08)')}
-    onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-  />
-  <Typography
-    variant="h6"
-    sx={{
-      color: 'white',
-      fontFamily: 'Poppins, sans-serif',
-      fontWeight: 600,
-      ml: 1,
-    }}
-  >
-    Neelam Jewellers
-  </Typography>
-</Box>
+          {/* 1️⃣ Mobile Top Row: Logo + Name + Search */}
+          <Box
+            sx={{
+              width: '100%',
+              display: { xs: 'flex', md: 'none' },
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Box onClick={homeHandler} sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+              <img
+                src={logo}
+                alt="Logo"
+                style={{
+                  width: '3rem',
+                  height: '3rem',
+                  borderRadius: '8px',
+                  filter: 'drop-shadow(0 0 8px rgba(82, 134, 255, 1))',
+                  transition: 'transform 0.3s ease',
+                }}
+                onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.08)')}
+                onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+              />
+              <Typography
+                variant="h6"
+                sx={{
+                  color: 'white',
+                  fontFamily: 'Poppins, sans-serif',
+                  fontWeight: 600,
+                  ml: 1,
+                }}
+              >
+                Neelam Jewellers
+              </Typography>
+            </Box>
 
-                
-          {/* 2️⃣ Mobile Second Row: Category Button aligned right */}
-          {/* <Box
+            <Box>
+              <IconButton onClick={() => navigate('/Search')} sx={{ color: '#fff' }}>
+                <SearchIcon />
+              </IconButton>
+            </Box>
+          </Box>
+
+          {/* 2️⃣ Mobile Second Row: Product Dropdown */}
+          <Box
             sx={{
               display: { xs: 'flex', md: 'none' },
               width: '100%',
-              justifyContent: 'flex-end',
+              justifyContent: 'center',
               mt: 1,
             }}
           >
-            <ProductsMenu dropName="Gemstone Categories" />
-          </Box> */}
+            <ProductsMenu dropName="Gemstones" />
+          </Box>
 
-          {/* 3️⃣ Desktop layout (original, visible md+) */}
+          {/* 3️⃣ Desktop layout */}
           <Box
             sx={{
               width: '100%',
@@ -122,34 +111,19 @@ const Navbar = () => {
               justifyContent: 'space-between',
             }}
           >
-            <HomeContainer>
-              <NavLogo
-                to="top"
-                spy={true}
-                smooth={true}
-                offset={-70}
-                duration={500}
-                onClick={homeHandler}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  textDecoration: 'none',
-                  color: 'inherit',
+            <HomeContainer onClick={homeHandler}>
+              <img src={logo} alt="Logo" />
+              <Typography
+                variant="h5"
+                sx={{
+                  fontWeight: 700,
+                  color: 'white',
+                  fontFamily: 'Poppins, sans-serif',
+                  display: { xs: 'none', sm: 'block' },
                 }}
               >
-                <img src={logo} alt="Logo" />
-                <Typography
-                  variant="h5"
-                  sx={{
-                    fontWeight: 700,
-                    color: 'white',
-                    fontFamily: 'Poppins, sans-serif',
-                    display: { xs: 'none', sm: 'block' },
-                  }}
-                >
-                  Neelam Jewellers
-                </Typography>
-              </NavLogo>
+                Neelam Jewellers
+              </Typography>
             </HomeContainer>
 
             <Box sx={{ flexGrow: 4, display: 'flex', ml: 3 }}>
@@ -170,7 +144,7 @@ const Navbar = () => {
             </Box>
           </Box>
 
-          {/* Customer Menu (visible on all sizes if Customer) */}
+          {/* 4️⃣ Customer Account & Cart */}
           {currentRole === 'Customer' && (
             <Box sx={{ flexGrow: 0, display: 'flex', mt: { xs: 1, md: 0 } }}>
               <Tooltip title="Cart">
@@ -229,21 +203,19 @@ const Navbar = () => {
       </Container>
 
       {/* Cart Drawer */}
-      {isCartOpen && (
-        <Drawer
-          anchor="right"
-          open={isCartOpen}
-          onClose={() => setIsCartOpen(false)}
-          sx={{
-            '& .MuiDrawer-paper': {
-              width: '400px',
-              boxSizing: 'border-box',
-            },
-          }}
-        >
-          <Cart setIsCartOpen={setIsCartOpen} />
-        </Drawer>
-      )}
+      <Drawer
+        anchor="right"
+        open={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        sx={{
+          '& .MuiDrawer-paper': {
+            width: '400px',
+            boxSizing: 'border-box',
+          },
+        }}
+      >
+        <Cart setIsCartOpen={setIsCartOpen} />
+      </Drawer>
     </AppBar>
   );
 };
@@ -302,7 +274,5 @@ const styles = {
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
       },
     },
-  
-  
   },
 };
