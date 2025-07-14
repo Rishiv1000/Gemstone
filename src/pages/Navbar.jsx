@@ -11,9 +11,14 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Logout, Shop2 } from '@mui/icons-material';
-
 import { Link, useNavigate } from 'react-router-dom';
-import { Avatar, Badge, Divider, Drawer, ListItemIcon } from '@mui/material';
+import {
+  Avatar,
+  Badge,
+  Divider,
+  Drawer,
+  ListItemIcon,
+} from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { styled } from 'styled-components';
 
@@ -24,11 +29,10 @@ import { updateCustomer } from '../redux/userHandle';
 import { NavLogo } from '../utils/styles';
 import logo from '../assets/logo.png';
 
-// Gradient
-const blueSapphire = 'linear-gradient(90deg, rgba(0,0,0,0.6) 0%, rgba(22, 70, 39, 0.8) 100%)';
+const blueSapphire = 'linear-gradient(90deg, rgba(53, 52, 80, 0.98) 0%, rgba(1, 15, 122, 0.8) 100%)';
 
 const Navbar = () => {
-  const { currentUser, currentRole } = useSelector(state => state.user);
+  const { currentUser, currentRole } = useSelector((state) => state.user);
   const totalQuantity =
     currentUser?.cartDetails?.reduce((total, item) => total + item.quantity, 0) || 0;
 
@@ -58,47 +62,35 @@ const Navbar = () => {
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* LOGO (Desktop & Mobile) */}
+          {/* LOGO */}
           <HomeContainer>
-            <Typography
-              variant="h6"
-              noWrap
-              sx={{
-                mr: 2,
+            <NavLogo
+              to="top"
+              spy={true}
+              smooth={true}
+              offset={-70}
+              duration={500}
+              onClick={homeHandler}
+              style={{
                 display: 'flex',
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
+                alignItems: 'center',
+                textDecoration: 'none',
                 color: 'inherit',
               }}
             >
-              <NavLogo
-                to="top"
-                spy={true}
-                smooth={true}
-                offset={-70}
-                duration={500}
-                onClick={homeHandler}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.4rem',
-                  textDecoration: 'none',
-                  color: 'inherit',
+              <img src={logo} alt="Logo" />
+              <Typography
+                variant="h5"
+                sx={{
+                  fontWeight: 700,
+                  color: 'white',
+                  fontFamily: 'Poppins, sans-serif',
+                  display: { xs: 'none', sm: 'block' },
                 }}
               >
-                <img src={logo} alt="Logo" style={{ width: '3.5rem', height: '3.5rem' }} />
-                <span
-                  style={{
-                    color: 'white',
-                    fontFamily: 'sans-serif',
-                    fontSize: '1rem',
-                  }}
-                >
-                  Neelam Jewellers
-                </span>
-              </NavLogo>
-            </Typography>
+                Neelam Gemstones
+              </Typography>
+            </NavLogo>
           </HomeContainer>
 
           {/* Mobile - Search Icon */}
@@ -109,23 +101,22 @@ const Navbar = () => {
           </Box>
 
           {/* Desktop - Search & Menu */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, ml: 3 }}>
+          <Box sx={{ flexGrow: 4, display: { xs: 'none', md: 'flex' }, ml: 3 }}>
             <Search />
-            <ProductsMenu dropName="GEMSTONE" />
+            <ProductsMenu dropName="Catagories" />
           </Box>
 
           {/* Contact Info */}
-          <Box
+           <Box
             sx={{
-              display: { xs: 'none', md: 'flex' },
-              alignItems: 'center',
-              marginRight: 5,
-              color: 'rgba(255, 255, 255, 1)',
-              fontSize: '0.975rem',
-              fontWeight: 350,
+              display: { xs: 'none', lg: 'flex' },
+              fontSize: '0.95rem',
+              color: '#fff',
+              fontWeight: 400,
+              ml: 4,
             }}
           >
-           <strong>35 Year Legacy & Experience in 100% Original Gemstones ...... </strong>  <b>...  ||   Contact: 9936182620</b>
+            35+ Years of Trust | 100% Genuine Gemstones | Contact: <strong>&nbsp;9936182620</strong>
           </Box>
 
           {/* Customer Menu */}
@@ -140,11 +131,11 @@ const Navbar = () => {
               </Tooltip>
               <Tooltip title="Account settings">
                 <IconButton
-                  onClick={e => setAnchorElUser(e.currentTarget)}
+                  onClick={(e) => setAnchorElUser(e.currentTarget)}
                   size="small"
                   sx={{ ml: 2 }}
                 >
-                  <Avatar sx={{ backgroundColor: '#8970dc' }}>
+                  <Avatar sx={{ backgroundColor: '#ff0a0aff' }}>
                     {currentUser?.name?.charAt(0)}
                   </Avatar>
                 </IconButton>
@@ -165,16 +156,16 @@ const Navbar = () => {
                 </MenuItem>
                 <MenuItem onClick={() => navigate('/Orders')}>
                   <ListItemIcon>
-                    <Shop2 fontSize="small" />
+                    <Shop2 fontSize="small" sx={{ color: '#fff' }} />
                   </ListItemIcon>
                   <Link to="/Orders" style={{ color: 'inherit', textDecoration: 'none' }}>
                     My Orders
                   </Link>
                 </MenuItem>
-                <Divider />
+                <Divider sx={{ bgcolor: '#444' }} />
                 <MenuItem onClick={() => navigate('/Logout')}>
                   <ListItemIcon>
-                    <Logout fontSize="small" />
+                    <Logout fontSize="small" sx={{ color: '#fff' }} />
                   </ListItemIcon>
                   <Link to="/Logout" style={{ color: 'inherit', textDecoration: 'none' }}>
                     Logout
@@ -208,18 +199,37 @@ const Navbar = () => {
 
 export default Navbar;
 
+//
 // Styled Components
+//
+
 const HomeContainer = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
+
+  img {
+    width: 4.2rem;
+    height: 4.2rem;
+    border-radius: 10px;
+    filter: drop-shadow(0 0 8px rgba(255, 246, 81, 1));
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.08);
+      filter: drop-shadow(0 0 12px rgba(1, 111, 255, 1));
+    }
+  }
 `;
 
 const styles = {
   styledPaper: {
     overflow: 'visible',
-    filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
     mt: 1.5,
+    background: 'linear-gradient(to bottom right, #000000, #1c1c1c)',
+    color: '#fff',
+    borderRadius: '10px',
+    minWidth: '180px',
     '& .MuiAvatar-root': {
       width: 32,
       height: 32,
@@ -234,9 +244,14 @@ const styles = {
       right: 14,
       width: 10,
       height: 10,
-      bgcolor: 'background.paper',
+      bgcolor: '#1c1c1c',
       transform: 'translateY(-50%) rotate(45deg)',
       zIndex: 0,
+    },
+    '& .MuiMenuItem-root': {
+      '&:hover': {
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+      },
     },
   },
 };
