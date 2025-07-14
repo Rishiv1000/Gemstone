@@ -40,7 +40,7 @@ const ProductGrid = ({ products = [], title }) => {
                                 <PriceRow>
                                     <OldPrice>₹{product.price.mrp}</OldPrice>
                                     <CurrentPrice>₹{product.price.cost}</CurrentPrice>
-                                    <Discount>{product.price.discountPercent} %</Discount>
+{/*                                     <Discount>{product.price.discountPercent} %</Discount> */}
                                 </PriceRow>
                                 <Tagline>{product.tagline}</Tagline>
                             </ProductCard>
