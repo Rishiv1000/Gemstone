@@ -26,20 +26,21 @@ import {
   updateCurrentUser,
 } from './userSlice';
 
-REACT_APP_BASE_URL = "https://neelam-gemstones.onrender.com"
+// ✅ Base API URL
+const BASE_URL = "https://neelam-gemstones.onrender.com";
 
-// ✅ Helper to extract serializable error from Axios
+// ✅ Error helper
 const getAxiosError = (error) => ({
   message: error?.response?.data?.message || error.message || 'Unknown error',
   status: error?.response?.status || 500,
 });
 
-// ================= AUTH =================
+// ================ AUTH =================
 export const authUser = (fields, role, mode) => async (dispatch) => {
   dispatch(authRequest());
 
   try {
-    const result = await axios.post(`${REACT_APP_BASE_URL}/${role}${mode}`, fields, {
+    const result = await axios.post(`${BASE_URL}/${role}${mode}`, fields, {
       headers: { 'Content-Type': 'application/json' },
     });
 
@@ -58,7 +59,7 @@ export const addStuff = (address, fields) => async (dispatch) => {
   dispatch(authRequest());
 
   try {
-    const result = await axios.post(`${REACT_APP_BASE_URL}/${address}`, fields, {
+    const result = await axios.post(`${BASE_URL}/${address}`, fields, {
       headers: { 'Content-Type': 'application/json' },
     });
 
@@ -75,7 +76,7 @@ export const addStuff = (address, fields) => async (dispatch) => {
 // ================ UPDATE STUFF =================
 export const updateStuff = (fields, id, address) => async (dispatch) => {
   try {
-    const result = await axios.put(`${REACT_APP_BASE_URL}/${address}/${id}`, fields, {
+    const result = await axios.put(`${BASE_URL}/${address}/${id}`, fields, {
       headers: { 'Content-Type': 'application/json' },
     });
 
@@ -94,7 +95,7 @@ export const deleteStuff = (id, address) => async (dispatch) => {
   dispatch(getRequest());
 
   try {
-    const result = await axios.delete(`${REACT_APP_BASE_URL}/${address}/${id}`);
+    const result = await axios.delete(`${BASE_URL}/${address}/${id}`);
     if (result.data.message) {
       dispatch(getFailed(result.data.message));
     } else {
@@ -113,7 +114,7 @@ export const updateCustomer = (fields, id) => async (dispatch) => {
   delete newFields.token;
 
   try {
-    await axios.put(`${REACT_APP_BASE_URL}/CustomerUpdate/${id}`, newFields, {
+    await axios.put(`${BASE_URL}/CustomerUpdate/${id}`, newFields, {
       headers: { 'Content-Type': 'application/json' },
     });
 
@@ -128,7 +129,7 @@ export const getProductsbySeller = (id) => async (dispatch) => {
   dispatch(getRequest());
 
   try {
-    const result = await axios.get(`${REACT_APP_BASE_URL}/getSellerProducts/${id}`);
+    const result = await axios.get(`${BASE_URL}/getSellerProducts/${id}`);
 
     if (result.data.message) {
       dispatch(getSellerProductsFailed(result.data.message));
@@ -145,7 +146,7 @@ export const getProducts = () => async (dispatch) => {
   dispatch(getRequest());
 
   try {
-    const result = await axios.get(`${REACT_APP_BASE_URL}/getProducts`);
+    const result = await axios.get(`${BASE_URL}/getProducts`);
 
     if (result.data.message) {
       dispatch(getProductsFailed(result.data.message));
@@ -162,7 +163,7 @@ export const getProductDetails = (id) => async (dispatch) => {
   dispatch(getRequest());
 
   try {
-    const result = await axios.get(`${REACT_APP_BASE_URL}/getProductDetail/${id}`);
+    const result = await axios.get(`${BASE_URL}/getProductDetail/${id}`);
 
     if (result.data.message) {
       dispatch(getProductDetailsFailed(result.data.message));
@@ -179,7 +180,7 @@ export const getCustomers = (id, address) => async (dispatch) => {
   dispatch(getRequest());
 
   try {
-    const result = await axios.get(`${REACT_APP_BASE_URL}/${address}/${id}`);
+    const result = await axios.get(`${BASE_URL}/${address}/${id}`);
 
     if (result.data.message) {
       dispatch(getCustomersListFailed(result.data.message));
@@ -196,7 +197,7 @@ export const getSpecificProducts = (id, address) => async (dispatch) => {
   dispatch(getRequest());
 
   try {
-    const result = await axios.get(`${REACT_APP_BASE_URL}/${address}/${id}`);
+    const result = await axios.get(`${BASE_URL}/${address}/${id}`);
 
     if (result.data.message) {
       dispatch(getSpecificProductsFailed(result.data.message));
@@ -213,7 +214,7 @@ export const getSearchedProducts = (address, key) => async (dispatch) => {
   dispatch(getRequest());
 
   try {
-    const result = await axios.get(`${REACT_APP_BASE_URL}/${address}/${key}`);
+    const result = await axios.get(`${BASE_URL}/${address}/${key}`);
 
     if (result.data.message) {
       dispatch(getSearchFailed(result.data.message));
