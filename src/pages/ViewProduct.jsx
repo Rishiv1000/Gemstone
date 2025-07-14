@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Container} from '@mui/material';
 import { useParams } from 'react-router-dom';
+import { addToCart } from '../redux/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Card, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import { MoreVert } from '@mui/icons-material';
@@ -26,6 +27,7 @@ const ViewProduct = () => {
 
     const { currentUser, productDetails, loading, responseDetails } = useSelector(state => state.user);
 
+    const { currentRole } = useSelector(state => state.user);
     useEffect(() => {
         dispatch(getProductDetails(productID));
     }, [dispatch, productID]);
@@ -80,6 +82,18 @@ const ViewProduct = () => {
                         <p><strong>Subcategory:</strong> {productDetails?.subcategory}</p>
                     </ProductDetails>
 
+   {
+                                    currentRole === "Customer" &&
+                                    <>
+                                        <ButtonContainer>
+                                            <BasicButton
+                                                onClick={() => dispatch(addToCart(productDetails))}
+                                            >
+                                                Add to Cart
+                                            </BasicButton>
+                                        </ButtonContainer>
+                                    </>
+                                }
                     <ButtonContainer>
                         <a
                             href={`https://wa.me/919140865532?text=${encodeURIComponent(
