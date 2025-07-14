@@ -42,9 +42,9 @@ const Home = () => {
   return (
     <div id="top">
       {/* Mobile Menu */}
-      <MobileMenuContainer>
+{/*       <MobileMenuContainer>
         <ProductsMenu dropName="Products" />
-      </MobileMenuContainer>
+      </MobileMenuContainer> */}
 
       {/* Banner Image */}
       <BannerBox>
