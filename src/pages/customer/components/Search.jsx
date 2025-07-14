@@ -26,7 +26,7 @@ const Search = () => {
     return (
         <SearchContainer>
             <InputSearchBase
-                placeholder="Search Your Goodluck GemStone..."
+                placeholder="Search Your Goodluck"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={(e) => {
