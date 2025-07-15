@@ -14,13 +14,25 @@ import bannerImage from '../assets/nn.png';
 import adImage from '../assets/Shop.png';
 import logo from '../assets/logo.png';
 
-const blueSapphire ='linear-gradient(90deg, rgba(53, 52, 80, 0.98) 0%, rgba(1, 15, 122, 0.8) 100%)';
+const blueSapphire = 'linear-gradient(90deg, rgba(53, 52, 80, 0.98) 0%, rgba(1, 15, 122, 0.8) 100%)';
+
+const gemstones = [
+  { name: 'माणिक्य (Ruby)',  color: '#FF0000' },
+  { name: 'मोती (Pearl)', color: '#D4F1F9' },
+  { name: 'पन्ना (Emerald)', color: '#50C878' },
+  { name: 'हीरा (Diamond)',  color: '#C0C0C0' },
+  { name: 'लाल मूंगा (Red Coral)',  color: '#FF4500' },
+  { name: 'लहसुनिया (Cat\'s Eye)', color: '#B5A642' },
+  { name: 'गोमेद (Hessonite)',  color: '#D2691E' },
+  { name: 'नीलम (Blue Sapphire)', color: '#0000FF' },
+  { name: 'पुखरा (Yellow Sapphire)',  color: '#FFD700' },
+];
 
 const Home = () => {
   const dispatch = useDispatch();
   const { productData, responseProducts, error } = useSelector((state) => state.user);
   const [showNetworkError, setShowNetworkError] = useState(false);
-  const [showLoadingLine, setShowLoadingLine] = useState(true); // control the loading line
+  const [showLoadingLine, setShowLoadingLine] = useState(true);
 
   useEffect(() => {
     dispatch(getProducts());
@@ -33,20 +45,13 @@ const Home = () => {
     }
   }, [error]);
 
-  // Hide animated loading line after 10 seconds
   useEffect(() => {
-    const timer = setTimeout(() => setShowLoadingLine(false), 10000);
+    const timer = setTimeout(() => setShowLoadingLine(false), 20000);
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <div id="top">
-      {/* Mobile Menu */}
-      {/* <MobileMenuContainer>
-        <ProductsMenu dropName="Products" />
-      </MobileMenuContainer> */}
-
-      {/* Banner Image */}
       <BannerBox>
         <img
           src={bannerImage}
@@ -55,10 +60,13 @@ const Home = () => {
         />
       </BannerBox>
 
-      {/* Animated Loading Line */}
+      {/* Gemstone Showcase */}
+      <GemstoneShowcase />
+
+      {/* Loading Line */}
       {showLoadingLine && <LoadingLine />}
 
-      {/* Error or Loading */}
+      {/* Error or Loading State */}
       {showNetworkError ? (
         <CenteredContent>
           <Typography variant="h4">Sorry, network error.</Typography>
@@ -118,25 +126,16 @@ export default Home;
 // Styled Components
 //
 
-const MobileMenuContainer = styled(Container)(({ theme }) => ({
-  display: 'none',
-  [theme.breakpoints.down('sm')]: {
-    display: 'flex',
-    paddingTop: theme.spacing(2),
-  },
-}));
-
 const BannerBox = styled(Box)`
   padding: 20px 10px;
   background: #f9f9f9;
 `;
 
-// 🔽 Animated loading line style
 const LoadingLine = styled(Box)`
-  height: 4px;
-  width: 100%;
-  background: linear-gradient(to right, #00c6ff, #0072ff);
-  animation: loadLine 10s linear forwards;
+  height: 6px;
+  width: 0%;
+  background: linear-gradient(90deg, #005eff, #000b76, #005eff);
+  animation: loadLine 20s ease-out forwards;
 
   @keyframes loadLine {
     0% {
@@ -212,4 +211,57 @@ const Logo = styled('img')`
 const FooterText = styled(Box)`
   text-align: left;
   max-width: 400px;
-`; 
+`;
+
+//
+// GemstoneShowcase Component
+//
+//
+// GemstoneShowcase Component - Horizontal Marquee Style
+//
+const GemstoneShowcase = () => {
+  return (
+    <HorizontalScroller>
+      <Track>
+        {gemstones.concat(gemstones).map((gem, index) => (
+          <GlowingScrollText key={index} glowcolor={gem.color}>
+            {gem.name} <span style={{ fontWeight: 'normal', color: '#000000cc' }}>{gem.en}</span>
+          </GlowingScrollText>
+        ))}
+      </Track>
+    </HorizontalScroller>
+  );
+};
+
+const HorizontalScroller = styled(Box)`
+  overflow: hidden;
+  width: 100%;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.98) 0%, rgba(1, 22, 74, 0.8) 100%);
+  padding: 30px 0;
+  position: relative;
+`;
+
+const Track = styled(Box)`
+  display: flex;
+  gap: 80px;
+  animation: scrollLeft 40s linear infinite;
+  white-space: nowrap;
+
+  @keyframes scrollLeft {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+`;
+
+const GlowingScrollText = styled(Typography)`
+  font-size: 22px;
+  font-weight: bold;
+  color: ${({ glowcolor }) => glowcolor};
+  text-shadow: 0 0 10px ${({ glowcolor }) => glowcolor}, 0 0 20px ${({ glowcolor }) => glowcolor};
+  display: inline-block;
+  min-width: max-content;
+`;
