@@ -1,0 +1,24 @@
+name: Trigger URL Every 15 Minutes
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"  # Every 15 minutes
+  workflow_dispatch:        # Allows manual run from GitHub UI
+
+jobs:
+  trigger-url:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger URL
+        run: |
+          echo "Triggering the URL..."
+          curl -s https://neelam-gemstones.onrender.com || echo "Failed to reach URL"
+
+      - name: Wait for 5 minutes
+        run: |
+          echo "Waiting for 5 minutes..."
+          sleep 300  # Wait 5 minutes
+
+      - name: Done
+        run: echo "Job complete after 5 minutes."
