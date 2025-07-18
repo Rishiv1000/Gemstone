@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Container, Typography, styled } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../redux/userHandle';
@@ -16,10 +16,25 @@ const blueSapphire = 'linear-gradient(90deg, rgba(53, 52, 80, 0.98) 0%, rgba(1, 
 const Home = () => {
   const dispatch = useDispatch();
   const { productData } = useSelector((state) => state.user);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(getProducts());
+    // Wait 2 seconds before loading products
+    const timer = setTimeout(() => {
+      setLoading(false);
+      dispatch(getProducts());
+    }, 2000);
+
+    return () => clearTimeout(timer);
   }, [dispatch]);
+
+  if (loading) {
+    return (
+      <LoadingContainer>
+        <Typography variant="h5">Loading Neelam Jewellers...</Typography>
+      </LoadingContainer>
+    );
+  }
 
   return (
     <div id="top">
@@ -125,4 +140,12 @@ const Logo = styled('img')`
 const FooterText = styled(Box)`
   text-align: left;
   max-width: 400px;
+`;
+
+const LoadingContainer = styled(Container)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+  text-align: center;
 `;
