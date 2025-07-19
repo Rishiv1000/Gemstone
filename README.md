@@ -4,8 +4,6 @@ https://neelamjewellers.vercel.app/
 
 Backend - https://github.com/abhishekv1000/Neelam-Gemstones/tree/main
 
-https://github.com/Yogndrr/MERN-Ecommerce-Site
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
@@ -73,3 +71,8 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+
+https://github.com/Yogndrr/MERN-Ecommerce-Site
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
