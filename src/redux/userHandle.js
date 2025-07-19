@@ -27,7 +27,7 @@ import {
 } from './userSlice';
 
 // ✅ Base API URL
-// const BASE_URL = "https://neelam-gemstones.onrender.com";
+const BASE_URL = "https://neelam-gemstones.onrender.com";
 
 // ✅ Error helper
 const getAxiosError = (error) => ({
